@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="post">
+        {% if post.created %}
+            <div class="date">
+                {{ post.created }}
+            </div>
+
+        {%  endif %}
+        <h3>By: {{post.author.first_name}} {{post.author.last_name}}</h2>
+        <h1>{{post.title}}</h1>
+        <p>{{post.text}}</p>
+    </div>
+</div>
