@@ -1,13 +1,20 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
 {% for post in posts %}
     <div class="posts">
         <div class="container">
+        <div class="m-3">
         <h1>
             <a href="{% url 'post_detail' pk=post.pk %}">
                 {{post.title}}
             </a>
         </h1>
+        </div>
         <em class="post_elem">{{post.created}}</em>
         <p>{{post.text | truncatewords:10}}</p> <!-- truncatewords - ограничитель на 10 слов -->
         <hr/>
     </div>
 {% endfor %}
+{% include "blog/paginator.html" with page=posts%}
+{% endblock %}
