@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404
+
+from blog.forms import CommentForm
 from blog.models import Post
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -21,5 +23,14 @@ def post_list(request):
 
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk) # эта строчка. pk = это парметр функции get_object_or_404, а второй pk - это парметр функции post_detail
-    return render(request, 'blog/post_detail.html', {'post': post}) # 'post' это ключ, по которому осущ запрос на верхней строчке
+    comments = post.comments.filter(active=True)
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.save()
+    else:
+        comment_form = CommentForm()
+    return render(request, 'blog/post_detail.html', {'post': post, 'comments':comments, 'comment_form':comment_form}) # 'post' это ключ, по которому осущ запрос на верхней строчке
 

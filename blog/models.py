@@ -11,3 +11,20 @@ class Post(models.Model):
 
     def __str__(self): # для понятного отображения в админке
         return self.title + ' | ' + str(self.author)  # т.к. author это объект, необходимо преобразовать его в строку
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, related_name='comments', on_delete=models.CASCADE)
+    name = models.CharField(max_length=80)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = 'Комментарий'
+        verbose_name_plural = 'Комментарии'
+        ordering = ('-created',)
+
+    def __str__(self):
+        return 'Комментарий от - {} для: - {}'.format(self.name, self.post)

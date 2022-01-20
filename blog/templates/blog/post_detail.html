@@ -8,9 +8,13 @@
             </div>
 
         {%  endif %}
-        <h3>By: {{post.author.first_name}} {{post.author.last_name}}</h2>
+        <h2>By: {{post.author.first_name}} {{post.author.last_name}}</h2>
         <h1>{{post.title}}</h1>
         <p>{{post.text}}</p>
+        {% for comment in comments %}
+            <p>{{comment.name}}</p>
+            <p>{{comment.body}}</p>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
