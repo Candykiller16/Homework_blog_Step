@@ -1,6 +1,8 @@
 from django.test import TestCase
 
-class MainPageTests(TestCase):
-    def test_template(self):
-        response = self.client.get('/')
-        self.assertTemplateUsed(response, 'blog/post_list.html')
+class MainPageTest(TestCase):
+    def test_index_template(self):
+        url = ''
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog/base.html')

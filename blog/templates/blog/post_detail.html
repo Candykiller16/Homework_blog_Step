@@ -1,5 +1,8 @@
 {% extends 'blog/base.html' %}
 {% block content %}
+
+
+
 <div class="container">
     <div class="post">
         {% if post.created %}
@@ -11,10 +14,35 @@
         <h2>By: {{post.author.first_name}} {{post.author.last_name}}</h2>
         <h1>{{post.title}}</h1>
         <p>{{post.text}}</p>
+        {% with comments.count as total_comments %}
+            <h2 style="text-align: center"><i class="fas fa-comments"></i>
+                {{ total_comments }} comment{{ total_comments|pluralize }}
+            </h2>
+        {% endwith %}
+
         {% for comment in comments %}
-            <p>{{comment.name}}</p>
-            <p>{{comment.body}}</p>
+            <div class="comment">
+                <p class="info"><i class="fab fa-creative-commons-by"></i>
+                    Comment {{ forloop.counter }} by {{ comment.name }}
+                    {{ comment.created }}
+                </p>
+                {{ comment.body|linebreaks }}
+            </div>
+        {% empty %}
+            <p>There are no comments yet.</p>
         {% endfor %}
+
+        {% if new_comment %}
+            <h2>Your comment has been added.</h2>
+        {% else %}
+            <h2>Add a new comment</h2>
+            <form action="." method="post">
+                {{ comment_form.as_p }}
+                {% csrf_token %}
+                <p><input type="submit" class="btn btn-success" value="Add comment"></p>
+            </form>
+        {% endif %}
+
     </div>
 </div>
 {% endblock %}

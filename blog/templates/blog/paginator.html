@@ -1,11 +1,11 @@
 <div class ="pagination" style="display:flex; justify-content:center; bottom: 100%">
     <span class="step-links">
         {% if page.has_previous %}
-           <a href="?page={{ page.previous_page_number }}">Назад</a>
+           <button type="button" class="btn btn-primary"><a style="color: #ffffff" href="?page={{ page.previous_page_number }}">Назад</a></button>
         {% endif %}
         <span class="current"> Страница {{ page.number }} из {{page.paginator.num_pages}} </span>
         {% if page.has_next %}
-        <a href="?page={{ page.next_page_number }}">Вперед</a>
+            <button type="button" class="btn btn-primary"><a style="color: #ffffff" href="?page={{ page.next_page_number }}">Вперед</a></button>
         {% endif %}
     </span>
 </div>
